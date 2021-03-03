@@ -43,6 +43,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
             line-height: 110%;
         }
 
+        legend {
+            font-weight: bold;
+        }
+
         div#mainBox {
             margin: 10px;
         }
@@ -172,22 +176,23 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                     <p>This tool compares different investment strategies.
                         It shows you how effective each strategy is for an ETF like the MSCI World.</p>
 
-                    <h2>Strategies</h2>
-                    <ul>
-                        <li>Peter Perfect invests at lowest monthly close</li>
-                        <li>Ashley Action invests at start of a year</li>
-                        <li>Matthew Monthly invests in 12 even chunks at start of each month</li>
-                        <li>Rosie Rotten invests at highest monthly close</li>
-                        <li>Denise Delay invests on 1st day of every second month</li>
-                        <li>Quintus Quantus invests at start of January/April/July/October</li>
-                        <li>Whitney Waiting invests up to 3 times at all time lows, but only once per 3 years</li>
-                        <li>Larry Linger leaves his money in cash investments</li>
-                    </ul>
+                    <p>Participants:
+                        <ul>
+                            <li>Peter Perfect invests at lowest monthly close.</li>
+                            <li>Ashley Action invests at start of a year.</li>
+                            <li>Matthew Monthly invests in 12 even chunks at start of each month.</li>
+                            <li>Rosie Rotten invests at highest monthly close.</li>
+                            <li>Denise Delay invests on 1st day of every second month.</li>
+                            <li>Quintus Quantus invests at start of January/April/July/October.</li>
+                            <li>Whitney Waiting invests up to 3 times at all time lows, but only once per 3 years.</li>
+                            <li>Larry Linger leaves his money in cash investments.</li>
+                        </ul>
+                    </p>
                 </div>
             </fieldset>
 
             <fieldset>
-                <legend>Investment ETF</legend>
+                <legend>Investment (ETF)</legend>
 
                 <div id="isinChartBox"></div>
 
@@ -242,8 +247,9 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
             </div>
         </form>
 
-        <div id="resultBox">
+        <div id="resultBox" style="display:none;">
             <h1>Calculation Results</h1>
+            <p>On <span id="end_date"></span> each person has a total value (cash + share value) of:</p>
             <div id="graphBox"></div>
             <div id="history"></div>
         </div>
@@ -277,6 +283,8 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                 if (response.error) {
                     resultBox.html(response.error);
                 } else {
+                    $('#end_date').html(response.endDate);
+
                     let graphData = [];
                     $.each(response.data, function(index, resultData) {
                         // collect data for chart
@@ -289,7 +297,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                         let html_id = 'history_details_'+index;
                         let historyElement = $("<div/>", {
                             'id': html_id,
-                            'title': 'Log of ' + resultData.name,
+                            'title': resultData.name + ' Transactions',
                             'class': 'hidden'
                         }).appendTo(historyBox);
 
@@ -331,6 +339,9 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                         }).attr('href', '#').appendTo( div );
                     });
                 }
+
+                // make results visible
+                resultBox.css({ display: '' });
             }
         );
     }

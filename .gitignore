@@ -1,6 +1,7 @@
-composer.phar
 .idea
+.idea/
 .htaccess
+composer.phar
 composer.lock
 config.json
 vendor/*
