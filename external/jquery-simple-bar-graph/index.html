@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Simple Bar/Column Graph Examples</title>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/flatly/bootstrap.min.css">
+<link rel="stylesheet" href="dist/css/jquery.simple-bar-graph.min.css" />
+<style>
+  body { font-family: 'Roboto Consensed'; background-color: #f7f7f7; }
+  .container { margin: 150px auto; max-width: 600px; }
+  </style>
+</head>
+
+<body><div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="https://www.jqueryscript.net/chart-graph/animated-column-chart-array.html">Download This Plugin</a></li>
+<li><a href="https://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
+</ul><div id="carbon-block"></div>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<div class="container">
+  <h1>Simple Bar/Column Graph Examples</h1>
+  <p class="lead">A simple bar graph jQuery plugin (~2kb minified) that takes data from a JavaScript array containing keys and values and converting them into an animated column chart.</p>
+  <div id="example-one">Loading...</div>
+  <hr />
+  <button class="btn btn-danger" data-action="random">Update Chart</button>
+  <div id="example-two">Loading...</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script src="dist/js/jquery.simple-bar-graph.min.js"></script>
+<script>
+  $('#example-one').simpleBarGraph({
+        data: [
+      { key: 'jQuery', value: 100 },
+      { key: 'JavaScript', value: 95 },
+      { key: 'HTML', value: 96 },
+      { key: 'CSS', value: 44 },
+      { key: 'AngularJS', value: 32 },
+      { key: 'ReactJS', value: 55 },
+      { key: 'VueJS', value: 91 }
+],height: "200px",
+        barsColor: '#222',
+    });
+  var randomData = function() {
+        return [{
+            key: "01",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "02",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "03",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "04",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "05",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "06",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "07",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "08",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "09",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "10",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "11",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "12",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "13",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "14",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "15",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "16",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "17",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "18",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "19",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "20",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "21",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "22",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "23",
+            value: Math.floor(100 * Math.random() + 20)
+        }, {
+            key: "24",
+            value: Math.floor(100 * Math.random() + 20)
+        }]
+    }
+    $("#example-two").simpleBarGraph({
+        data: randomData(),
+        rowsCount: 8,
+        height: "200px",
+        rowCaptionsWidth: "24px",
+        barsColor: "#3D9970"
+    })
+    $("[data-action=random]").click(function() {
+        $("#example-two").simpleBarGraph({
+            data: randomData(),
+            rowsCount: 8,
+            height: "200px",
+            rowCaptionsWidth: "24px",
+            barsColor: "#3D9970"
+        })
+    })
+  </script>
+  <script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

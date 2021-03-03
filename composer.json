@@ -1,0 +1,37 @@
+{
+  "name": "chrisspaghetti/investment-strategies",
+  "license": "MIT",
+  "description": "Compare ETF investment strategies and visualize saving plan",
+  "type": "project",
+  "version": "0.1",
+  "keywords": [
+    "ISIN",
+    "ETF",
+    "savings",
+    "money",
+    "plan"
+  ],
+  "authors": [
+    {
+      "name": "chrisspaghetti",
+      "email": "chrisspaghetti@chrispage.de",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "ext-json": "*"
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "classmap": [
+      "classes/",
+      "classes/exceptions/"
+    ],
+    "files": [
+      "config.inc.php"
+    ]
+  }
+}
