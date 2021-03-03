@@ -117,7 +117,7 @@ class Calculator
         // Peter Perfect invests at lowest monthly close
         $portfolio = new Portfolio('Peter Perfect');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach($this->months as $month)
         {
@@ -146,6 +146,7 @@ class Calculator
         // Ashley Action invests at start of year
         $portfolio = new Portfolio('Ashley Action');
 
+        $monthlyRate = $this->configurator->getAmountPerMonth();
         $firstMonth = $this->months[array_key_first($this->months)];
         $lastMonth = $this->months[array_key_last($this->months)];
 
@@ -155,7 +156,7 @@ class Calculator
             if ($month->format('Y-m') == $firstMonth->format('Y-m')) {
                 $months_in_year = 12 - intval($month->format('m')) + 1;
                 // add cash for first year
-                $cash = ($this->configurator->getAmountPerYear() / 12) * $months_in_year;
+                $cash = round($monthlyRate * $months_in_year, 2);
                 $portfolio->addCash($month, $cash);
             }
 
@@ -172,7 +173,7 @@ class Calculator
                     } else {
                         // calculate amount for the year based on remaining months
                         $months_in_year = intval($lastMonth->format('m'));
-                        $cash = ($this->configurator->getAmountPerYear() / 12) * $months_in_year;
+                        $cash = round($monthlyRate * $months_in_year, 2);
                         $portfolio->addCash($month, $cash);
                     }
                 }
@@ -198,7 +199,7 @@ class Calculator
         // Matthew Monthly invests in 12 even chunks at start of each month
         $portfolio = new Portfolio('Matthew Monthly');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -226,7 +227,7 @@ class Calculator
         // Rosie Rotten invests at highest monthly close
         $portfolio = new Portfolio('Rosie Rotten');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -255,7 +256,7 @@ class Calculator
         // Doris Delay invests at 28th of each month
         $portfolio = new Portfolio('Doris Delay');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -289,7 +290,7 @@ class Calculator
         // Denise Delay invests on 1st day of every second month
         $portfolio = new Portfolio('Denise Delay');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -320,7 +321,7 @@ class Calculator
         // Quintus Quantus invests at start of January/April/July/October
         $portfolio = new Portfolio('Quintus Quantus');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -406,7 +407,7 @@ class Calculator
         }
 
         // add cash and do the investments
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -440,7 +441,7 @@ class Calculator
         // Larry Linger left his money in cash investments
         $portfolio = new Portfolio('Larry Linger');
 
-        $monthlyRate = floatval($this->configurator->getAmountPerYear() / 12);
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach($this->months as $month)
         {

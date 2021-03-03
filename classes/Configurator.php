@@ -101,9 +101,20 @@ class Configurator
         return $this->brokerCommissionAnyDayOfMonth;
     }
 
+    /**
+     * @return float
+     */
     public function getAmountPerYear()
     {
         return $this->amountPerYear;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmountPerMonth()
+    {
+        return round(($this->amountPerYear / 12), 2);
     }
 
     public function getStartDate()
