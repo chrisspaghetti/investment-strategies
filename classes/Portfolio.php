@@ -83,7 +83,7 @@ class Portfolio
         $this->history[] = [
             'date' => $date->format('Y-m-d'),
             'text' =>
-                    'Investment: '.$count.' @ '.$price.' '.$this->currency.'. '.
+                    'Buy: '.$count.' @ '.$price.' '.$this->currency.'. '.
                     'Fees: '.$brokerCommission.' '.$this->currency.'.'.
                     ' [-'.$this->cash.' '.$this->currency.']'
         ];
