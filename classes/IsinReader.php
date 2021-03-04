@@ -160,6 +160,86 @@ class IsinReader
     }
 
     /**
+     * @param int $year
+     * @param int $halfyear
+     * @return Course|null
+     */
+    public function getLowestCloseOfHalfyear(int $year, int $halfyear)
+    {
+        $return = null;
+
+        try {
+            $date = new DateTime($year.'-01-01');
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+
+        while (intval($date->format('Y')) == $year)
+        {
+            if (isset($this->courses[$date->format('Y-m-d')])
+                && (( $halfyear == 1 && in_array(intval($date->format('m')), array(1,2,3,4,5,6)))
+                 || ( $halfyear == 2 && in_array(intval($date->format('m')), array(7,8,9,10,11,12))))) {
+
+                $course = $this->courses[$date->format('Y-m-d')];
+
+                if ($return === null || $course->getValue() < $return->getValue()) {
+                    $return = $course;
+                }
+            }
+
+            if ($halfyear == 1 && intval($date->format('m')) == 7) {
+                $date->modify('+6 month');
+            } else if($halfyear == 2 && intval($date->format('m') == 1)) {
+                $date->modify('+6 month');
+            }
+
+            $date->modify('+1 day');
+        }
+
+        return $return;
+    }
+
+    public function getCourseAfterDrop($fromDate, $toDate, $percentageChange = 10, $days = 10)
+    {
+        $return = null;
+
+        $date = clone $fromDate;
+        while ($date <= $toDate && $return === null)
+        {
+            if (isset($this->courses[$date->format('Y-m-d')])) {
+                $courseToday = $this->courses[$date->format('Y-m-d')];
+
+                // get last 10 days and its highest course
+                $highestCourse = null;
+                $compareDate = clone $date;
+                for ($i = 1; $i<=$days; $i++) {
+                    $compareDate->modify('-1 day');
+
+                    if (isset($this->courses[$compareDate->format('Y-m-d')])) {
+                        $compareCourse = $this->courses[$compareDate->format('Y-m-d')];
+
+                        if ($highestCourse === null || $compareCourse->getValue() > $highestCourse->getValue()) {
+                            $highestCourse = $compareCourse;
+                        }
+                    }
+                }
+
+                // price dropped by 10%?
+                if ($highestCourse !== null) {
+                    $priceAfterDrop = $highestCourse->getValue() * ((100 - $percentageChange) / 100);
+                    if ($courseToday->getValue() <= $priceAfterDrop) {
+                        $return = $courseToday;
+                    }
+                }
+            }
+
+            $date->modify('+1 day');
+        }
+
+        return $return;
+    }
+
+    /**
      * @param DateTime $firstOfMonth
      * @return Course|null
      */

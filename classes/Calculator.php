@@ -108,8 +108,9 @@ class Calculator
         $portfolioMatthew = $this->calculateMatthew();
         $portfolioRosie = $this->calculateRosie();
         //$portfolioDoris = $this->calculateDoris();
-        $portfolioDenise = $this->calculateDenise();
+        //$portfolioDenise = $this->calculateDenise();
         $portfolioQuintus = $this->calculateQuintus();
+        $portfolioTrisha = $this->calculateTrisha();
         $portfolioWhitney = $this->calculateWhitney();
         $portfolioLarry = $this->calculateLarry();
 
@@ -119,8 +120,9 @@ class Calculator
         $result->add($portfolioMatthew);
         $result->add($portfolioRosie);
         //$result->add($portfolioDoris);
-        $result->add($portfolioDenise);
+        //$result->add($portfolioDenise);
         $result->add($portfolioQuintus);
+        $result->add($portfolioTrisha);
         $result->add($portfolioWhitney);
         $result->add($portfolioLarry);
 
@@ -340,6 +342,53 @@ class Calculator
         return $portfolio;
     }
 
+    /**
+     * @return Portfolio
+     * @throws CalculationException
+     */
+    protected function calculateTrisha()
+    {
+        // Trisha Tippit invests once per half year as soon as the course dropped by 10% within 10 days
+        $portfolio = new Portfolio('Trisha Tippit');
+
+        $monthlyRate = $this->configurator->getAmountPerMonth();
+
+        $firstMonth = $this->months[array_key_first($this->months)];
+
+        try {
+            foreach ($this->months as $month) {
+                $portfolio->addCash($month, $monthlyRate);
+
+                if (intval($month->format('m')) == 1
+                    || ($firstMonth->format('m') < 7 && $firstMonth->format('Y-m') == $month->format('Y-m')) ) {
+                    $fromDate = $month;
+                    $toDate = new DateTime($month->format('Y') . '-06-30');
+
+                    $course = $this->isinReader->getCourseAfterDrop($fromDate, $toDate, 10, 10);
+                } else if (intval($month->format('m')) == 7
+                    || ($firstMonth->format('m') >= 7 && $firstMonth->format('Y-m') == $month->format('Y-m'))) {
+                    $fromDate = $month;
+                    $toDate = new DateTime($month->format('Y') . '-12-31');
+
+                    $course = $this->isinReader->getCourseAfterDrop($fromDate, $toDate, 10, 10);
+                }
+
+                if (isset($course) && ($course->getDate()->format('Y-m') == $month->format('Y-m'))) {
+                    // invest
+                    $portfolio->buyStock(
+                        $this->isinReader->getIsin(),
+                        $course->getDate(),
+                        $course->getValue(),
+                        $this->configurator->getBrokerCommissionAnyDayOfMonth()
+                    );
+                }
+            }
+        } catch (Exception $e) {
+            throw new CalculationException($e->getMessage());
+        }
+
+        return $portfolio;
+    }
 
 
     /**
