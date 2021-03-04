@@ -30,8 +30,8 @@ if (!isset($_REQUEST['isin'])) {
         $calculationResult = $calculator->calc();
 
         $return = array(
-            'startDate' => $calculationResult->getStartDate()->format('d.m.Y'),
-            'endDate'   => $calculationResult->getEndDate()->format('d.m.Y'),
+            'startDate' => $calculationResult->getStartDate()->format('Y-m-d'),
+            'endDate'   => $calculationResult->getEndDate()->format('Y-m-d'),
             'data'      => []
         );
 

@@ -270,6 +270,11 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
         maxDate: new Date('2020-12-31'), // default, gets overwritten below by ISIN
         dateFormat: "dd.mm.yy"
     };
+    let dateFormatter = new Intl.DateTimeFormat('de-de', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
 
     const getCalculationResults = function() {
         $.post( 'result.php',
@@ -277,13 +282,14 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
             function (data) {
                 let response = jQuery.parseJSON(data);
 
+                // clear any existing result data
                 historyBox.html('');
                 graphBox.html('');
 
                 if (response.error) {
                     resultBox.html(response.error);
                 } else {
-                    $('#end_date').html(response.endDate);
+                    $('#end_date').html(dateFormatter.format(new Date(response.endDate)));
 
                     let graphData = [];
                     $.each(response.data, function(index, resultData) {
@@ -418,12 +424,6 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                     chart.timeScale().fitContent();
 
                     // set start and end date for this ISIN
-                    let dateFormatter = new Intl.DateTimeFormat('de-de', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    });
-
                     let startDate = new Date(response.startDate);
                     let endDate = new Date(response.endDate);
 
@@ -453,15 +453,23 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     // send form via AJAX request
     myForm.on('submit', function(e) {
         e.preventDefault();
-
-        // get calculation results
         getCalculationResults();
     });
 
+    // allow submitting form via ENTER
+    $('input').keypress(function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            myForm.submit();
+        }
+    });
+
+    // dynamically update ISIN chart
     $("input[name='isin']").on('change', function() {
       updateIsinChart(false);
     });
 
+    // enable datepicker and load first results
     $(document).ready(function() {
         $("input.datepicker").datepicker(datePickerOpts);
         updateIsinChart(true);

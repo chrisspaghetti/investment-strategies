@@ -86,16 +86,26 @@ class Configurator
     }
 
     //  -------------------- GETTER -----------------------
+
+    /**
+     * @return String
+     */
     public function getIsin()
     {
         return $this->isin;
     }
 
+    /**
+     * @return float
+     */
     public function getBrokerCommissionFirstDayOfMonth()
     {
         return $this->brokerCommissionFirstDayOfMonth;
     }
 
+    /**
+     * @return float
+     */
     public function getBrokerCommissionAnyDayOfMonth()
     {
         return $this->brokerCommissionAnyDayOfMonth;
@@ -112,16 +122,22 @@ class Configurator
     /**
      * @return float
      */
-    public function getAmountPerMonth()
+    public function getAmountPerMonthRounded()
     {
         return round(($this->amountPerYear / 12), 2);
     }
 
+    /**
+     * @return DateTime
+     */
     public function getStartDate()
     {
         return $this->startDate;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getEndDate()
     {
         return $this->endDate;

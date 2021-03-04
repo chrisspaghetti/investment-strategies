@@ -29,6 +29,25 @@ class Calculator
     protected $months = [];
 
     /**
+     * This compare-function is used for sorting courses ascending (from low to high)
+     *
+     * @param Course $a
+     * @param Course $b
+     * @return int
+     */
+    public static function cmp_course(Course $a, Course $b)
+    {
+        $courseA = $a->getValue();
+        $courseB = $b->getValue();
+
+        if ($courseA == $courseB) {
+            return 0;
+        }
+
+        return ($courseA > $courseB) ? 1 : -1;
+    }
+
+    /**
      * Konstruktur
      * @param Configurator $configurator
      * @throws CalculationException
@@ -117,7 +136,7 @@ class Calculator
         // Peter Perfect invests at lowest monthly close
         $portfolio = new Portfolio('Peter Perfect');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach($this->months as $month)
         {
@@ -146,7 +165,6 @@ class Calculator
         // Ashley Action invests at start of year
         $portfolio = new Portfolio('Ashley Action');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
         $firstMonth = $this->months[array_key_first($this->months)];
         $lastMonth = $this->months[array_key_last($this->months)];
 
@@ -156,7 +174,7 @@ class Calculator
             if ($month->format('Y-m') == $firstMonth->format('Y-m')) {
                 $months_in_year = 12 - intval($month->format('m')) + 1;
                 // add cash for first year
-                $cash = round($monthlyRate * $months_in_year, 2);
+                $cash = round(($this->configurator->getAmountPerYear() / 12) * $months_in_year, 2);
                 $portfolio->addCash($month, $cash);
             }
 
@@ -173,7 +191,7 @@ class Calculator
                     } else {
                         // calculate amount for the year based on remaining months
                         $months_in_year = intval($lastMonth->format('m'));
-                        $cash = round($monthlyRate * $months_in_year, 2);
+                        $cash = round(($this->configurator->getAmountPerYear() / 12) * $months_in_year, 2);
                         $portfolio->addCash($month, $cash);
                     }
                 }
@@ -199,7 +217,7 @@ class Calculator
         // Matthew Monthly invests in 12 even chunks at start of each month
         $portfolio = new Portfolio('Matthew Monthly');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -227,7 +245,7 @@ class Calculator
         // Rosie Rotten invests at highest monthly close
         $portfolio = new Portfolio('Rosie Rotten');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -256,7 +274,7 @@ class Calculator
         // Doris Delay invests at 28th of each month
         $portfolio = new Portfolio('Doris Delay');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -290,7 +308,7 @@ class Calculator
         // Denise Delay invests on 1st day of every second month
         $portfolio = new Portfolio('Denise Delay');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -321,7 +339,7 @@ class Calculator
         // Quintus Quantus invests at start of January/April/July/October
         $portfolio = new Portfolio('Quintus Quantus');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -343,24 +361,7 @@ class Calculator
         return $portfolio;
     }
 
-    /**
-     * This compare-function is used for sorting courses ascending (from low to high)
-     *
-     * @param Course $a
-     * @param Course $b
-     * @return int
-     */
-    public static function cmp_course(Course $a, Course $b)
-    {
-        $courseA = $a->getValue();
-        $courseB = $b->getValue();
 
-        if ($courseA == $courseB) {
-            return 0;
-        }
-
-        return ($courseA > $courseB) ? 1 : -1;
-    }
 
     /**
      * @return Portfolio
@@ -407,7 +408,7 @@ class Calculator
         }
 
         // add cash and do the investments
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach ($this->months as $month)
         {
@@ -441,7 +442,7 @@ class Calculator
         // Larry Linger left his money in cash investments
         $portfolio = new Portfolio('Larry Linger');
 
-        $monthlyRate = $this->configurator->getAmountPerMonth();
+        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
 
         foreach($this->months as $month)
         {
