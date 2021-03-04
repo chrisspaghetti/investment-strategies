@@ -8,7 +8,7 @@ if (!isset($_REQUEST['isin'])) {
     try {
         $configurator = new Configurator();
         $configurator->setIsin($_REQUEST['isin']);
-        $configurator->setAmountPerYear(intval($_REQUEST['amount']));
+        $configurator->setAmountPerMonth(intval($_REQUEST['amount']));
         $configurator->setBrokerCommissionAnyDayOfMonth(Helper::tofloat($_REQUEST['brokerCommissionAnyDayOfMonth']));
         $configurator->setBrokerCommissionFirstDayOfMonth(Helper::tofloat($_REQUEST['brokerCommissionFirstDayOfMonth']));
 

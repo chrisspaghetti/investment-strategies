@@ -192,7 +192,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
             </fieldset>
 
             <fieldset>
-                <legend>Investment (ETF)</legend>
+                <legend>Investment</legend>
 
                 <div id="isinChartBox"></div>
 
@@ -217,14 +217,14 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
             <fieldset>
                 <legend>Calculation Options</legend>
-                <p>Available amount per year:
+                <p>Available amount per month:
                 <label>
-                    <input type="text" name="amount" value="2400"/> EUR
+                    <input type="text" name="amount" value="200"/> EUR
                 </label>
                 </p>
                 <p>Broker fees for each investment:
                     <label>
-                        <input type="text" name="brokerCommissionAnyDayOfMonth" value="5.00" class="smallnumber"> EUR per regular buy and
+                        <input type="text" name="brokerCommissionAnyDayOfMonth" value="1.00" class="smallnumber"> EUR per regular buy and
                     </label>
                     <label>
                         <input type="text" name="brokerCommissionFirstDayOfMonth" value="1.00" class="smallnumber"> EUR per buy on 1st day
@@ -266,8 +266,9 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     let datePickerOpts = {
         changeMonth: true,
         changeYear: true,
-        minDate: new Date('2010-01-01'), // default, gets overwritten below by ISIN
-        maxDate: new Date('2020-12-31'), // default, gets overwritten below by ISIN
+        //minDate: new Date('2010-01-01'),
+        //maxDate: new Date('2020-12-31'),
+        yearRange: '1990:2021',
         dateFormat: "dd.mm.yy"
     };
     let dateFormatter = new Intl.DateTimeFormat('de-de', {
@@ -348,6 +349,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
                 // make results visible
                 resultBox.css({ display: '' });
+
+                $('html, body').animate({
+                    scrollTop: $("#resultBox").offset().top
+                }, 2000);
             }
         );
     }
@@ -444,10 +449,6 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
     const submitForm = function() {
         myForm.submit();
-
-        $('html, body').animate({
-            scrollTop: $("#resultBox").offset().top
-        }, 2000);
     }
 
     // send form via AJAX request
@@ -472,7 +473,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     // enable datepicker and load first results
     $(document).ready(function() {
         $("input.datepicker").datepicker(datePickerOpts);
-        updateIsinChart(true);
+        updateIsinChart(false); // dont submit already
     });
 
 </script>

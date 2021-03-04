@@ -6,4 +6,4 @@ This project aims to compare different investment strategies.
 - PHP 7.3.*
 
 # Configuration
-If you want to add new ISINs, edit `config.inc.php` and put ariva CSV files into import folder
+If you want to add new ISINs, edit `config.inc.php` and put ariva or onvista CSV files into import folder

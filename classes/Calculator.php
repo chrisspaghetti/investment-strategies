@@ -77,7 +77,7 @@ class Calculator
         }
 
         // set start date to 1st day of next month if its in same month as course data exist
-        if ($this->startDate->format('Y-m') == $isinStartDate->format('Y-m')) {
+        if ($this->startDate->format('Y-m') == $isinStartDate->format('Y-m') && intval($isinStartDate->format('d')) > 5) {
             // 'first day of next month' behaves wrong, see https://derickrethans.nl/obtaining-the-next-month-in-php.html
             $this->startDate->modify('last day of this month')->modify('+1 day');
         }
@@ -88,8 +88,8 @@ class Calculator
             $this->endDate = $configEndDate;
         }
 
-        // set end date to last day of month if its too close to current course data
-        if ($this->endDate->format('Y-m') == $isinEndDate->format('Y-m')) {
+        // set end date to last day of last month if the current course data is not already end of month
+        if ($this->endDate->format('Y-m') == $isinEndDate->format('Y-m') && intval($isinEndDate->format('d')) < 26) {
             $this->endDate->modify('first day of this month')->modify('-1 day');
         }
 
@@ -136,7 +136,7 @@ class Calculator
         // Peter Perfect invests at lowest monthly close
         $portfolio = new Portfolio('Peter Perfect');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach($this->months as $month)
         {
@@ -165,44 +165,23 @@ class Calculator
         // Ashley Action invests at start of year
         $portfolio = new Portfolio('Ashley Action');
 
-        $firstMonth = $this->months[array_key_first($this->months)];
-        $lastMonth = $this->months[array_key_last($this->months)];
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach($this->months as $month)
         {
-            // in Year 1 Ashley does not have full amount available if start date is not in January
-            if ($month->format('Y-m') == $firstMonth->format('Y-m')) {
-                $months_in_year = 12 - intval($month->format('m')) + 1;
-                // add cash for first year
-                $cash = round(($this->configurator->getAmountPerYear() / 12) * $months_in_year, 2);
-                $portfolio->addCash($month, $cash);
-            }
+            $portfolio->addCash($month, $monthlyRate);
 
-            // invest at start of year
+            // is it January?
             if (intval($month->format('m')) == 1) {
                 $course = $this->isinReader->getCourseOfDay($month);
 
-                // add cash for each new year
-                if ($month->format('Y-m') != $firstMonth->format('Y-m')) {
-                    // how much cash to add for this year?
-                    if($lastMonth->format('Y') > $month->format('Y')) {
-                        // add full amount when it's a full year
-                        $portfolio->addCash($month, $this->configurator->getAmountPerYear());
-                    } else {
-                        // calculate amount for the year based on remaining months
-                        $months_in_year = intval($lastMonth->format('m'));
-                        $cash = round(($this->configurator->getAmountPerYear() / 12) * $months_in_year, 2);
-                        $portfolio->addCash($month, $cash);
-                    }
-                }
-
                 // invest
                 $portfolio->buyStock(
-                                $this->isinReader->getIsin(),
-                                $course->getDate(),
-                                $course->getValue(),
-                                $this->configurator->getBrokerCommissionFirstDayOfMonth()
-                            );
+                    $this->isinReader->getIsin(),
+                    $course->getDate(),
+                    $course->getValue(),
+                    $this->configurator->getBrokerCommissionFirstDayOfMonth()
+                );
             }
         }
 
@@ -217,7 +196,7 @@ class Calculator
         // Matthew Monthly invests in 12 even chunks at start of each month
         $portfolio = new Portfolio('Matthew Monthly');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -245,7 +224,7 @@ class Calculator
         // Rosie Rotten invests at highest monthly close
         $portfolio = new Portfolio('Rosie Rotten');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -274,7 +253,7 @@ class Calculator
         // Doris Delay invests at 28th of each month
         $portfolio = new Portfolio('Doris Delay');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -308,7 +287,7 @@ class Calculator
         // Denise Delay invests on 1st day of every second month
         $portfolio = new Portfolio('Denise Delay');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -339,7 +318,7 @@ class Calculator
         // Quintus Quantus invests at start of January/April/July/October
         $portfolio = new Portfolio('Quintus Quantus');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -408,7 +387,7 @@ class Calculator
         }
 
         // add cash and do the investments
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach ($this->months as $month)
         {
@@ -442,7 +421,7 @@ class Calculator
         // Larry Linger left his money in cash investments
         $portfolio = new Portfolio('Larry Linger');
 
-        $monthlyRate = $this->configurator->getAmountPerMonthRounded();
+        $monthlyRate = $this->configurator->getAmountPerMonth();
 
         foreach($this->months as $month)
         {

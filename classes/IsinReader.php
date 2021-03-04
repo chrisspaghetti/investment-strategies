@@ -99,17 +99,24 @@ class IsinReader
                 continue;
             }
 
-            if (preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $parts[0], $matches) != false) {
+            $date_string = trim($parts[0]);
+
+            if (preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_string, $matches) != false) {
                 // check if valid date
                 if (checkdate($matches[2], $matches[3], $matches[1]) === false) {
-                    echo 'invalid date: '.$matches[1].'-'.$matches[2].'-'.$matches[3]."<br />\n";
-                    continue;
+                    die('invalid date: ' . $date_string);
                 }
+                $date = $date_string; // Y-m-d
+            } else if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\.(0[1-9]|1[0-2])\.([0-9]{4})$/", $date_string, $matches) != false) {
+                // check if valid date
+                if (checkdate($matches[2], $matches[1], $matches[3]) === false) {
+                    die('invalid date: ' . $date_string);
+                }
+                $date = $matches[3].'-'.$matches[2].'-'.$matches[1];
             } else {
                 continue;
             }
 
-            $date = $parts[0]; // Y-m-d
             $courseValue = Helper::tofloat($parts[4]);
 
             try {

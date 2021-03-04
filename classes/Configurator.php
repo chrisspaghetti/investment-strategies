@@ -11,7 +11,7 @@ class Configurator
     /**
      * @var float
      */
-    protected $amountPerYear;
+    protected $amountPerMonth;
 
     /**
      * @var DateTime
@@ -48,9 +48,9 @@ class Configurator
     /**
      * @param float $value
      */
-    public function setAmountPerYear(float $value)
+    public function setAmountPerMonth(float $value)
     {
-        $this->amountPerYear = $value;
+        $this->amountPerMonth = $value;
     }
 
     /**
@@ -114,17 +114,9 @@ class Configurator
     /**
      * @return float
      */
-    public function getAmountPerYear()
+    public function getAmountPerMonth()
     {
-        return $this->amountPerYear;
-    }
-
-    /**
-     * @return float
-     */
-    public function getAmountPerMonthRounded()
-    {
-        return round(($this->amountPerYear / 12), 2);
+        return $this->amountPerMonth;
     }
 
     /**
