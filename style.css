@@ -1,0 +1,125 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    font-size: 1.0em;
+    line-height: 110%;
+}
+
+legend {
+    font-weight: bold;
+}
+
+div#mainBox {
+    margin: 10px;
+}
+
+div.content {
+    text-align: left;
+    margin: 20px 0 150px 0;
+}
+
+div#isinChartBox {
+    float: right;
+    border: 1px solid #C0C0C0;
+}
+
+div.submitBox {
+    text-align: center;
+    margin: 30px 0 30px 0;
+}
+
+div#resultBox {
+    padding-top: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+div#history {
+    margin: 50px 0 0 0;
+    text-align: left;
+    line-height: 0.8em;
+    font-size: 0.8em;
+}
+
+a.details {
+    padding: 5px;
+    font-size: 0.7em;
+}
+
+div.hidden {
+    display: none;
+}
+
+h1 {
+    text-align: center;
+    font-size: 150%;
+}
+
+h2 {
+    font-size: 120%;
+}
+
+form {
+    padding: 3px 10px 0 3px;
+}
+
+fieldset {
+    margin: 0 0 20px 0;
+}
+
+ul.isin {
+    list-style: none;
+    padding-left: 0;
+}
+
+input[type=text] {
+    padding-left: 2px;
+    padding-bottom: 2px;
+    font-size: 0.9em;
+    width: 80px;
+}
+
+input.smallnumber {
+    width: 50px;
+}
+
+div.error {
+    font-weight: bold;
+    color: #444444;
+    background-color: #FF1E1E;
+    border: 1px dotted #444444;
+    padding: 5px;
+    margin: 10px;
+}
+
+div.warning {
+    font-weight: bold;
+    color: #444444;
+    background-color: #FFFFE0;
+    border: 1px dotted #444444;
+    padding: 5px;
+    margin: 10px;
+}
+
+div.success {
+    font-weight: bold;
+    color: green;
+}
+
+.simple-bar-graph__value {
+    top: -10px;
+    font-size: 0.8em;
+    line-height: 1.1em;
+}
+
+.simple-bar-graph__value::after {
+    content: " €"
+}
+
+.simple-bar-graph__caption {
+    bottom: -40px;
+    font-size: 0.8em;
+    line-height: 1.15em;
+}

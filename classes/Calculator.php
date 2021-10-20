@@ -48,6 +48,34 @@ class Calculator
     }
 
     /**
+     * @param DateTime $startDate
+     * @param DateTime $endDate
+     * @return DateTime[]
+     */
+    public static function getMonthInBetween(DateTime $startDate, DateTime $endDate)
+    {
+        $copyStartDate = clone $startDate;
+        $copyEndDate   = clone $endDate;
+
+        $start    = $copyStartDate->modify('first day of this month');
+        // 'first day of next month' can behave wrong, see https://derickrethans.nl/obtaining-the-next-month-in-php.html
+        $end      = $copyEndDate->modify('last day of this month')->modify('+1 day');
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($start, $interval, $end);
+
+        $result = [];
+        foreach ($period as $dt) {
+            try {
+                $result[] = new DateTime($dt->format("Y-m").'-01');
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Konstruktur
      * @param Configurator $configurator
      * @throws CalculationException
@@ -78,7 +106,7 @@ class Calculator
 
         // set start date to 1st day of next month if its in same month as course data exist
         if ($this->startDate->format('Y-m') == $isinStartDate->format('Y-m') && intval($isinStartDate->format('d')) > 5) {
-            // 'first day of next month' behaves wrong, see https://derickrethans.nl/obtaining-the-next-month-in-php.html
+            // 'first day of next month' can behave wrong, see https://derickrethans.nl/obtaining-the-next-month-in-php.html
             $this->startDate->modify('last day of this month')->modify('+1 day');
         }
 
@@ -93,9 +121,8 @@ class Calculator
             $this->endDate->modify('first day of this month')->modify('-1 day');
         }
 
-        $this->months = $this->getMonthInBetween($this->startDate, $this->endDate);
+        $this->months = Calculator::getMonthInBetween($this->startDate, $this->endDate);
     }
-
 
     /**
      * @return CalculationResult
@@ -397,7 +424,6 @@ class Calculator
     protected function calculateWhitney()
     {
         // Whitney Waiting invests 3 times: at all time lows, but only once per 3 years
-        // Quintus Quantus invests at start of January/April/July/October
         $portfolio = new Portfolio('Whitney Waiting');
 
         // get lowest close per month
@@ -481,31 +507,4 @@ class Calculator
         return $portfolio;
     }
 
-
-    /**
-     * @param DateTime $startDate
-     * @param DateTime $endDate
-     * @return DateTime[]
-     */
-    protected function getMonthInBetween(DateTime $startDate, DateTime $endDate)
-    {
-        $copyStartDate = clone $startDate;
-        $copyEndDate   = clone $endDate;
-
-        $start    = $copyStartDate->modify('first day of this month');
-        $end      = $copyEndDate->modify('first day of next month');
-        $interval = DateInterval::createFromDateString('1 month');
-        $period   = new DatePeriod($start, $interval, $end);
-
-        $result = [];
-        foreach ($period as $dt) {
-            try {
-                $result[] = new DateTime($dt->format("Y-m").'-01');
-            } catch (Exception $e) {
-                die($e->getMessage());
-            }
-        }
-
-        return $result;
-    }
 }

@@ -1,5 +1,8 @@
 .idea
 .idea/
+.idea/*
+/.idea/
+/.idea/*
 .htaccess
 composer.phar
 composer.lock
