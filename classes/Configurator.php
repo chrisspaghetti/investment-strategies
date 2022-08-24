@@ -1,7 +1,7 @@
 <?php
 
 
-class Configurator
+class Configurator implements ConfiguratorInterface
 {
     /**
      * @var String

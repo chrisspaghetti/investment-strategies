@@ -1,7 +1,7 @@
 <?php
 
 
-class Portfolio
+class Portfolio implements PortfolioInterface
 {
     /**
      * @var String
@@ -24,7 +24,7 @@ class Portfolio
     protected $stocks = []; // isin => count as float
 
     /**
-     * @var Investment[]
+     * @var InvestmentInterface[]
      */
     protected $investments = [];
 
@@ -66,7 +66,7 @@ class Portfolio
      * @param DateTime $date
      * @param float $price
      * @param float $brokerCommission
-     * @return Investment
+     * @return InvestmentInterface
      */
     public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission)
     {

@@ -1,7 +1,7 @@
 <?php
 
 
-class Investment
+class Investment implements InvestmentInterface
 {
     /**
      * @var DateTime
@@ -29,7 +29,7 @@ class Investment
     protected $brokerCommission;
 
     /**
-     * Konstruktur
+     * investment constructor
      * @param String $isin
      * @param DateTime $date
      * @param float $pricePerStock

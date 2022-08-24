@@ -1,7 +1,7 @@
 <?php
 
 
-class Course
+class Course implements CourseInterface
 {
     /**
      * @var DateTime
@@ -14,7 +14,7 @@ class Course
     protected $value;
 
     /**
-     * Konstruktur
+     * constructor for a course
      * @param float $course
      * @param DateTime $date
      */
@@ -24,11 +24,17 @@ class Course
         $this->date = $date;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getDate()
     {
         return $this->date;
     }
 
+    /**
+     * @return float
+     */
     public function getValue()
     {
         return $this->value;

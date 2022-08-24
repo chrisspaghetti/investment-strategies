@@ -54,14 +54,11 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
                     <p>Participants:
                         <ul>
-                            <li>Peter Perfect invests at lowest monthly close.</li>
-                            <li>Ashley Action invests at start of a year.</li>
-                            <li>Matthew Monthly invests at start of each month.</li>
-                            <li>Rosie Rotten invests at highest monthly close.</li>
-                            <li>Quintus Quantus invests at start of January/April/July/October.</li>
-                            <li>Trisha Tippit invests once per half year as soon as the course dropped by 10% within 10 days.</li>
-                            <li>Whitney Waiting invests up to 3 times at all time lows, but only once per 3 years.</li>
-                            <li>Larry Linger leaves his money in cash investments.</li>
+                        <?php
+                        $participants = unserialize(PARTICIPANTS);
+                        foreach ($participants as $participant) { ?>
+                            <li><?php echo $participant[0]; ?></li>
+                        <?php } ?>
                         </ul>
                     </p>
                 </div>

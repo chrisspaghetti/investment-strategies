@@ -1,10 +1,10 @@
 <?php
 
 
-class CalculationResult
+class CalculationResult implements CalculationResultInterface
 {
     /**
-     * @var Portfolio[]
+     * @var PortfolioInterface[]
      */
     protected $portfolios = [];
 
@@ -30,9 +30,9 @@ class CalculationResult
     }
 
     /**
-     * @param Portfolio $portfolio
+     * @param PortfolioInterface $portfolio
      */
-    public function add(Portfolio $portfolio)
+    public function add(PortfolioInterface $portfolio)
     {
         $this->portfolios[] = $portfolio;
     }
@@ -54,7 +54,7 @@ class CalculationResult
     }
 
     /**
-     * @return Portfolio[]
+     * @return PortfolioInterface[]
      */
     public function getPortfolios()
     {

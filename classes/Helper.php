@@ -3,6 +3,10 @@
 
 class Helper
 {
+    /**
+     * @param $num
+     * @return float
+     */
     public static function tofloat($num)
     {
         $dotPos = strrpos($num, '.');

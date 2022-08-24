@@ -1,7 +1,7 @@
 <?php
 
 
-class IsinReader
+class IsinReader implements IsinReaderInterface
 {
     /**
      * @var String
@@ -9,29 +9,29 @@ class IsinReader
     protected $isin;
 
     /**
-     * @var Course[]
+     * @var CourseInterface[]
      */
     protected $courses = []; // Y-m-d => Course
 
     /**
-     * @var IsinReader[]
+     * @var IsinReaderInterface[]
      */
     private static $instances = []; // isin => IsinReader
 
     /**
-     * Konstruktur
+     * IsinReader constructor
      * @param String $isin
      */
     protected function __construct(String $isin)
     {
         $this->isin = $isin;
 
-        $this->readData();
+        $this->readCsvFile();
     }
 
     /**
      * @param String $isin
-     * @return IsinReader
+     * @return IsinReaderInterface
      */
     public static function getInstance(String $isin)
     {
@@ -84,7 +84,10 @@ class IsinReader
         }
     }
 
-    protected function readData()
+    /**
+     * read csv file from import directory
+     */
+    protected function readCsvFile()
     {
         // the File is a downloaded CSV file from ariva.de e.g. https://www.ariva.de/ishares_msci_europe_ucits_etf_eur_acc-fonds/historische_kurse
         $file = IMPORT_DIR.'/'.$this->isin.'.csv';
@@ -117,6 +120,11 @@ class IsinReader
                 continue;
             }
 
+            // fix for "30.11.2021;4.640,25;4.646,02;4.560;4.567;PKT;4068050909"
+            if (strpos($line, ';PKT;') !== false ) {
+                $parts[4] = str_replace('.', '', $parts[4]);
+            }
+
             $courseValue = Helper::tofloat($parts[4]);
 
             try {
@@ -136,7 +144,7 @@ class IsinReader
 
     /**
      * @param DateTime $firstOfMonth
-     * @return Course|null
+     * @return CourseInterface|null
      */
     public function getLowestCloseOfMonth(DateTime $firstOfMonth)
     {
@@ -162,7 +170,7 @@ class IsinReader
     /**
      * @param int $year
      * @param int $halfyear
-     * @return Course|null
+     * @return CourseInterface|null
      */
     public function getLowestCloseOfHalfyear(int $year, int $halfyear)
     {
@@ -199,7 +207,14 @@ class IsinReader
         return $return;
     }
 
-    public function getCourseAfterDrop($fromDate, $toDate, $percentageChange = 10, $days = 10)
+    /**
+     * @param DateTime $fromDate
+     * @param DateTime $toDate
+     * @param int $percentageChange
+     * @param int $days
+     * @return CourseInterface|null
+     */
+    public function getCourseAfterDrop(DateTime $fromDate, DateTime $toDate, int $percentageChange = 10, int $days = 10)
     {
         $return = null;
 
@@ -241,7 +256,7 @@ class IsinReader
 
     /**
      * @param DateTime $firstOfMonth
-     * @return Course|null
+     * @return CourseInterface|null
      */
     public function getHighestCloseOfMonth(DateTime $firstOfMonth)
     {
@@ -268,7 +283,7 @@ class IsinReader
      * @param DateTime $anyDate
      * @param bool $fallback_future_course TRUE: When on the given date the course is not available take the course of a following day
      *                                     FALSE: When on the given date the course is not available take the course of a previous day
-     * @return Course
+     * @return CourseInterface
      */
     public function getCourseOfDay(DateTime $anyDate, $fallback_future_course = true)
     {
@@ -293,7 +308,7 @@ class IsinReader
     }
 
     /**
-     * @return Course[]
+     * @return CourseInterface[]
      */
     public function getCourses() {
         return $this->courses;
