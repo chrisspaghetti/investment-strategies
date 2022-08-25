@@ -106,6 +106,7 @@ class Calculator implements CalculatorInterface
                 new StrategyQuarterly();
                 new StrategyTwoMonthly();
                 new StrategyYearly();
+                new StrategyMixMonthlyAndDip();
 
                 $strategy = new StrategyMonthlyFirst();
                 $strategy->applyToPortfolio($portfolio, $this->isinReader, $this->timeRange, $this->configurator);

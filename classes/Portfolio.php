@@ -57,21 +57,36 @@ class Portfolio implements PortfolioInterface
 
         $this->history[] = [
             'date' => $date->format('Y-m-d'),
-            'text' => '+'.$amount.' '.$this->currency
+            'text' => '+'.$amount.' '.$this->currency.' ['.$this->cash.' '.$this->currency.']'
         ];
     }
 
     /**
-     * @param String $isin
-     * @param DateTime $date
-     * @param float $price
-     * @param float $brokerCommission
+     * Buy some stocks on a certain date for the given price
+     *
+     * @param String $isin                  ISIN of stock which is bought
+     * @param DateTime $date                purchase date
+     * @param float $price                  stock price
+     * @param float $brokerCommission       fee amount for the broker that is substracted from the available cash
+     * @param float $useSpecificCashAmount  if "0" then use all cash that is in the portfolio
      * @return InvestmentInterface
      */
-    public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission)
+    public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission, float $useSpecificCashAmount = 0)
     {
         // how much to buy?
-        $count = round(floatval(($this->cash - $brokerCommission) / $price), 4);
+        if ($useSpecificCashAmount > 0) {
+            $amountSpend = $useSpecificCashAmount;
+            $amountForPurchase = $useSpecificCashAmount - $brokerCommission;
+        } else {
+            $amountSpend = $this->cash;
+            $amountForPurchase = $this->cash - $brokerCommission;
+        }
+
+        if ($amountForPurchase < 0) {
+            $amountForPurchase = 0;
+        }
+
+        $count = round(floatval($amountForPurchase / $price), 4);
 
         $investment = new Investment($isin, $date, $price, $count, $brokerCommission);
         $this->investments[] = $investment;
@@ -84,12 +99,12 @@ class Portfolio implements PortfolioInterface
             'date' => $date->format('Y-m-d'),
             'text' =>
                     'Buy: '.$count.' @ '.$price.' '.$this->currency.'. '.
-                    'Fees: '.$brokerCommission.' '.$this->currency.'.'.
-                    ' [-'.$this->cash.' '.$this->currency.']'
+                    'Fee: '.$brokerCommission.' '.$this->currency.'.'.
+                    ' -'.$amountSpend.' '.$this->currency.'.'
         ];
 
         $this->stocks[$isin] += $count;
-        $this->cash = 0;
+        $this->cash -= $amountSpend;
 
         return $investment;
     }
