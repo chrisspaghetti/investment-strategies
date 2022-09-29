@@ -3,7 +3,6 @@
 
 class StrategyMonthlyFirst implements StrategyInterface
 {
-
     /**
      * invest at start of each month
      *

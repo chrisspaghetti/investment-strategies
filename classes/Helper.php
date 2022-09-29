@@ -4,10 +4,10 @@
 class Helper
 {
     /**
-     * @param $num
+     * @param string $num
      * @return float
      */
-    public static function tofloat($num)
+    public static function tofloat(string $num): float
     {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');

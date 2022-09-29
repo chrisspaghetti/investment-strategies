@@ -5,15 +5,15 @@ interface TimeRangeInterface
     /**
      * @return DateTime[]
      */
-    public function getMonths();
+    public function getMonths(): array;
 
     /**
      * @return DateTime
      */
-    public function getStartDate();
+    public function getStartDate(): DateTime;
 
     /**
      * @return DateTime
      */
-    public function getEndDate();
+    public function getEndDate(): DateTime;
 }

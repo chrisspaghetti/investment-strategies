@@ -6,17 +6,17 @@ class IsinReader implements IsinReaderInterface
     /**
      * @var String
      */
-    protected $isin;
+    protected string $isin;
 
     /**
      * @var CourseInterface[]
      */
-    protected $courses = []; // Y-m-d => Course
+    protected array $courses = []; // Y-m-d => Course
 
     /**
      * @var IsinReaderInterface[]
      */
-    private static $instances = []; // isin => IsinReader
+    private static array $instances = []; // isin => IsinReader
 
     /**
      * IsinReader constructor
@@ -33,7 +33,7 @@ class IsinReader implements IsinReaderInterface
      * @param String $isin
      * @return IsinReaderInterface
      */
-    public static function getInstance(String $isin)
+    public static function getInstance(String $isin): IsinReaderInterface
     {
         if (!isset(self::$instances[$isin])) {
            self::$instances[$isin] = new IsinReader($isin);
@@ -45,7 +45,7 @@ class IsinReader implements IsinReaderInterface
     /**
      * @return String
      */
-    public function getIsin()
+    public function getIsin(): string
     {
         return $this->isin;
     }
@@ -53,7 +53,7 @@ class IsinReader implements IsinReaderInterface
     /**
      * @return DateTime|null
      */
-    public function getStartDate()
+    public function getStartDate(): ?DateTime
     {
         if (empty($this->courses))
             return null;
@@ -70,7 +70,7 @@ class IsinReader implements IsinReaderInterface
     /**
      * @return DateTime|null
      */
-    public function getEndDate()
+    public function getEndDate(): ?DateTime
     {
         if (empty($this->courses))
             return null;
@@ -86,8 +86,9 @@ class IsinReader implements IsinReaderInterface
 
     /**
      * read csv file from import directory
+     * @return void
      */
-    protected function readCsvFile()
+    protected function readCsvFile(): void
     {
         // the File is a downloaded CSV file from ariva.de e.g. https://www.ariva.de/ishares_msci_europe_ucits_etf_eur_acc-fonds/historische_kurse
         $file = IMPORT_DIR.'/'.$this->isin.'.csv';
@@ -104,13 +105,13 @@ class IsinReader implements IsinReaderInterface
 
             $date_string = trim($parts[0]);
 
-            if (preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_string, $matches) != false) {
+            if (preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date_string, $matches)) {
                 // check if valid date
                 if (checkdate($matches[2], $matches[3], $matches[1]) === false) {
                     die('invalid date: ' . $date_string);
                 }
                 $date = $date_string; // Y-m-d
-            } else if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\.(0[1-9]|1[0-2])\.([0-9]{4})$/", $date_string, $matches) != false) {
+            } else if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\.(0[1-9]|1[0-2])\.([0-9]{4})$/", $date_string, $matches)) {
                 // check if valid date
                 if (checkdate($matches[2], $matches[1], $matches[3]) === false) {
                     die('invalid date: ' . $date_string);
@@ -121,7 +122,7 @@ class IsinReader implements IsinReaderInterface
             }
 
             // fix for "30.11.2021;4.640,25;4.646,02;4.560;4.567;PKT;4068050909"
-            if (strpos($line, ';PKT;') !== false ) {
+            if (str_contains($line, ';PKT;')) {
                 $parts[4] = str_replace('.', '', $parts[4]);
             }
 
@@ -146,7 +147,7 @@ class IsinReader implements IsinReaderInterface
      * @param DateTime $firstOfMonth
      * @return CourseInterface|null
      */
-    public function getLowestCloseOfMonth(DateTime $firstOfMonth)
+    public function getLowestCloseOfMonth(DateTime $firstOfMonth): ?CourseInterface
     {
         $return = null;
 
@@ -172,7 +173,7 @@ class IsinReader implements IsinReaderInterface
      * @param int $halfyear
      * @return CourseInterface|null
      */
-    public function getLowestCloseOfHalfyear(int $year, int $halfyear)
+    public function getLowestCloseOfHalfyear(int $year, int $halfyear): ?CourseInterface
     {
         $return = null;
 
@@ -214,7 +215,7 @@ class IsinReader implements IsinReaderInterface
      * @param int $days
      * @return CourseInterface|null
      */
-    public function getCourseAfterDrop(DateTime $fromDate, DateTime $toDate, int $percentageChange = 10, int $days = 10)
+    public function getCourseAfterDrop(DateTime $fromDate, DateTime $toDate, int $percentageChange = 10, int $days = 10): ?CourseInterface
     {
         $return = null;
 
@@ -258,7 +259,7 @@ class IsinReader implements IsinReaderInterface
      * @param DateTime $firstOfMonth
      * @return CourseInterface|null
      */
-    public function getHighestCloseOfMonth(DateTime $firstOfMonth)
+    public function getHighestCloseOfMonth(DateTime $firstOfMonth): ?CourseInterface
     {
         $return = null;
 
@@ -285,7 +286,7 @@ class IsinReader implements IsinReaderInterface
      *                                     FALSE: When on the given date the course is not available take the course of a previous day
      * @return CourseInterface
      */
-    public function getCourseOfDay(DateTime $anyDate, $fallback_future_course = true)
+    public function getCourseOfDay(DateTime $anyDate, $fallback_future_course = true): CourseInterface
     {
         $return = null;
 
@@ -310,7 +311,8 @@ class IsinReader implements IsinReaderInterface
     /**
      * @return CourseInterface[]
      */
-    public function getCourses() {
+    public function getCourses(): array
+    {
         return $this->courses;
     }
 }

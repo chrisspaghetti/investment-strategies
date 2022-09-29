@@ -6,27 +6,27 @@ class Investment implements InvestmentInterface
     /**
      * @var DateTime
      */
-    protected $date;
+    protected DateTime $date;
 
     /**
      * @var String
      */
-    protected $isin;
+    protected string $isin;
 
     /**
      * @var float
      */
-    protected $price;
+    protected float $price;
 
     /**
      * @var float
      */
-    protected $count;
+    protected float $count;
 
     /**
      * @var float
      */
-    protected $brokerCommission;
+    protected float $brokerCommission;
 
     /**
      * investment constructor
@@ -49,7 +49,7 @@ class Investment implements InvestmentInterface
      * @param bool $with_commission
      * @return float
      */
-    public function getPricePaid(bool $with_commission = true)
+    public function getPricePaid(bool $with_commission = true): float
     {
         $paid = floatval($this->price * $this->count);
 

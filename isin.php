@@ -18,7 +18,7 @@ if (!isset($_REQUEST['isin'])) {
             'value' => $course->getValue()
         ];
 
-        // set start date to 1st January of lowest year
+        // set start date to 1st January of the lowest year
         if (!isset($return['startDate']) && $date->format('md') < '0105') {
             $return['startDate'] = $date->format('Y-m').'-01';
         }
@@ -27,7 +27,7 @@ if (!isset($_REQUEST['isin'])) {
     }
 
     if (isset($date) && $date->format('md') < '1228') {
-        // set end date to 31th December of highest year
+        // set end date to 31st December of the highest year
         $last_year = intval($date->format('Y')) - 1;
         $return['endDate'] = $last_year.'-12-31';
     }

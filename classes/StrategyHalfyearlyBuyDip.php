@@ -3,7 +3,6 @@
 
 class StrategyHalfyearlyBuyDip implements StrategyInterface
 {
-
     /**
      * invest once per half year as soon as the course dropped by 10% within 10 days
      *

@@ -3,9 +3,8 @@
 
 class StrategyAllTimeLowsAfter3Years implements StrategyInterface
 {
-
     /**
-     * invest 3 times: at all time lows, but only once per 3 years
+     * invest 3 times: at all-time lows, but only once per 3 years
      *
      * @param PortfolioInterface $portfolio
      * @param IsinReaderInterface $isinReader
@@ -18,7 +17,7 @@ class StrategyAllTimeLowsAfter3Years implements StrategyInterface
                                      TimeRangeInterface $timeRange,
                                      ConfiguratorInterface $configurator)
     {
-        // get lowest close per month
+        // get the lowest close per month
         $monthCourses = [];
         foreach ($timeRange->getMonths() as $month)
         {

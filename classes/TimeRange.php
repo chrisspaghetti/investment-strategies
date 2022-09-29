@@ -6,17 +6,17 @@ class TimeRange implements TimeRangeInterface
     /**
      * @var DateTime
      */
-    protected $start;
+    protected DateTime $start;
 
     /**
      * @var DateTime
      */
-    protected $end;
+    protected DateTime $end;
 
     /**
      * @var DateTime[]
      */
-    protected $months = [];
+    protected array $months = [];
 
     /**
      * TimeRange constructor.
@@ -50,21 +50,24 @@ class TimeRange implements TimeRangeInterface
     /**
      * @return DateTime[]
      */
-    public function getMonths() {
+    public function getMonths(): array
+    {
         return $this->months;
     }
 
     /**
      * @return DateTime
      */
-    public function getStartDate() {
+    public function getStartDate(): DateTime
+    {
         return $this->start;
     }
 
     /**
      * @return DateTime
      */
-    public function getEndDate() {
+    public function getEndDate(): DateTime
+    {
         return $this->end;
     }
 }

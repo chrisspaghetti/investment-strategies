@@ -3,7 +3,6 @@
 
 class StrategyMixMonthlyAndDip implements StrategyInterface
 {
-
     /**
      * @param PortfolioInterface $portfolio
      * @param IsinReaderInterface $isinReader
@@ -52,16 +51,6 @@ class StrategyMixMonthlyAndDip implements StrategyInterface
 
                 unset($fromDate);
             }
-            /*
-            // for performance reasons: set $fromDate not too far away in the past
-            if (isset($fromDate)) {
-                $interval = date_diff($fromDate, $month);
-                if (intval($interval->format('m')) >= 2) {
-                    unset($fromDate);
-                    $fromDate = clone $month;
-                    $fromDate->modify('-1 month');
-                }
-            }*/
         }
     }
 }

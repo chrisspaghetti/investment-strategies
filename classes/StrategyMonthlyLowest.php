@@ -3,7 +3,6 @@
 
 class StrategyMonthlyLowest implements StrategyInterface
 {
-
     /**
      * invest at lowest monthly close
      *

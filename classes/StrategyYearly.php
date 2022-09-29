@@ -3,7 +3,6 @@
 
 class StrategyYearly implements StrategyInterface
 {
-
     /**
      * invest at start of each year
      *

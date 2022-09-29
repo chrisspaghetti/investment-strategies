@@ -6,16 +6,16 @@ class Course implements CourseInterface
     /**
      * @var DateTime
      */
-    protected $date;
+    protected DateTime $date;
 
     /**
      * @var float
      */
-    protected $value;
+    protected float $value;
 
     /**
      * constructor for a course
-     * @param float $course
+     * @param float $value
      * @param DateTime $date
      */
     public function __construct(float $value, DateTime $date)
@@ -27,7 +27,7 @@ class Course implements CourseInterface
     /**
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
@@ -35,7 +35,7 @@ class Course implements CourseInterface
     /**
      * @return float
      */
-    public function getValue()
+    public function getValue(): float
     {
         return $this->value;
     }

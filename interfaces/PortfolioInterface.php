@@ -12,17 +12,16 @@ interface PortfolioInterface
      * @param float $useSpecificCashAmount  if "0" then use all cash that is in the portfolio
      * @return InvestmentInterface
      */
-    public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission, float $useSpecificCashAmount = 0);
+    public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission, float $useSpecificCashAmount = 0): InvestmentInterface;
 
     /**
      * @return String
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @param DateTime $date
-     * @return float|int
+     * @return float
      */
-    public function getTotalValue(DateTime $date);
-
+    public function getTotalValue(DateTime $date): float;
 }

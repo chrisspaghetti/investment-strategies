@@ -6,39 +6,39 @@ class Portfolio implements PortfolioInterface
     /**
      * @var String
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var float
      */
-    protected $cash;
+    protected float $cash;
 
     /**
      * @var String
      */
-    protected $currency;
+    protected string $currency;
 
     /**
      * @var array
      */
-    protected $stocks = []; // isin => count as float
+    protected array $stocks = []; // isin => count as float
 
     /**
      * @var InvestmentInterface[]
      */
-    protected $investments = [];
+    protected array $investments = [];
 
     /**
      * @var array
      */
-    protected $history = [];
+    protected array $history = [];
 
     /**
      * Konstruktur
      * @param String $name
      * @param String $currency
      */
-    public function __construct(String $name, String $currency = '€')
+    public function __construct(string $name, string $currency = '€')
     {
         $this->name = $name;
         $this->cash = 0;
@@ -50,8 +50,9 @@ class Portfolio implements PortfolioInterface
     /**
      * @param DateTime $date
      * @param float $amount
+     * @return void
      */
-    public function addCash(DateTime $date, float $amount)
+    public function addCash(DateTime $date, float $amount): void
     {
         $this->cash += $amount;
 
@@ -71,7 +72,7 @@ class Portfolio implements PortfolioInterface
      * @param float $useSpecificCashAmount  if "0" then use all cash that is in the portfolio
      * @return InvestmentInterface
      */
-    public function buyStock(String $isin, DateTime $date, float $price, float $brokerCommission, float $useSpecificCashAmount = 0)
+    public function buyStock(string $isin, DateTime $date, float $price, float $brokerCommission, float $useSpecificCashAmount = 0): InvestmentInterface
     {
         // how much to buy?
         if ($useSpecificCashAmount > 0) {
@@ -86,7 +87,7 @@ class Portfolio implements PortfolioInterface
             $amountForPurchase = 0;
         }
 
-        $count = round(floatval($amountForPurchase / $price), 4);
+        $count = round(($amountForPurchase / $price), 4);
 
         $investment = new Investment($isin, $date, $price, $count, $brokerCommission);
         $this->investments[] = $investment;
@@ -112,7 +113,7 @@ class Portfolio implements PortfolioInterface
     /**
      * @return String
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -120,16 +121,16 @@ class Portfolio implements PortfolioInterface
     /**
      * @return array with ['date' => Y-m-d, 'text' => String]
      */
-    public function getHistory()
+    public function getHistory(): array
     {
         return $this->history;
     }
 
     /**
      * @param DateTime $date
-     * @return float|int
+     * @return float
      */
-    public function getTotalValue(DateTime $date)
+    public function getTotalValue(DateTime $date): float
     {
         $return = $this->cash;
 
@@ -147,9 +148,9 @@ class Portfolio implements PortfolioInterface
     /**
      * @return float
      */
-    public function getInvestedCash()
+    public function getInvestedCash(): float
     {
-        $return = 0;
+        $return = 0.00;
 
         foreach ($this->investments as $investment) {
             $return += $investment->getPricePaid();

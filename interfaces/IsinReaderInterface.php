@@ -4,22 +4,22 @@ interface IsinReaderInterface
     /**
      * @return String
      */
-    public function getIsin();
+    public function getIsin(): string;
 
     /**
      * @return DateTime|null
      */
-    public function getStartDate();
+    public function getStartDate(): ?DateTime;
 
     /**
      * @return DateTime|null
      */
-    public function getEndDate();
+    public function getEndDate(): ?DateTime;
 
     /**
      * @return CourseInterface[]
      */
-    public function getCourses();
+    public function getCourses(): array;
 
     /**
      * @param DateTime $anyDate
@@ -27,7 +27,7 @@ interface IsinReaderInterface
      *                                     FALSE: When on the given date the course is not available take the course of a previous day
      * @return CourseInterface
      */
-    public function getCourseOfDay(DateTime $anyDate, $fallback_future_course = true);
+    public function getCourseOfDay(DateTime $anyDate, $fallback_future_course = true): CourseInterface;
 
     /**
      * @param DateTime $fromDate
@@ -36,25 +36,25 @@ interface IsinReaderInterface
      * @param int $days
      * @return CourseInterface|null
      */
-    public function getCourseAfterDrop(DateTime $fromDate, DateTime $toDate, int $percentageChange = 10, int $days = 10);
+    public function getCourseAfterDrop(DateTime $fromDate, DateTime $toDate, int $percentageChange = 10, int $days = 10): ?CourseInterface;
 
     /**
      * @param DateTime $firstOfMonth
      * @return CourseInterface|null
      */
-    public function getHighestCloseOfMonth(DateTime $firstOfMonth);
+    public function getHighestCloseOfMonth(DateTime $firstOfMonth): ?CourseInterface;
 
     /**
      * @param DateTime $firstOfMonth
      * @return CourseInterface|null
      */
-    public function getLowestCloseOfMonth(DateTime $firstOfMonth);
+    public function getLowestCloseOfMonth(DateTime $firstOfMonth): ?CourseInterface;
 
     /**
      * @param int $year
      * @param int $halfyear
      * @return CourseInterface|null
      */
-    public function getLowestCloseOfHalfyear(int $year, int $halfyear);
+    public function getLowestCloseOfHalfyear(int $year, int $halfyear): ?CourseInterface;
 
 }

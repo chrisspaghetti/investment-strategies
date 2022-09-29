@@ -3,7 +3,6 @@
 
 class StrategyMonthlyHighest implements StrategyInterface
 {
-
     /**
      * invest at highest monthly close
      *

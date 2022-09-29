@@ -4,10 +4,10 @@ interface CourseInterface
     /**
      * @return DateTime
      */
-    public function getDate();
+    public function getDate(): DateTime;
 
     /**
      * @return float
      */
-    public function getValue();
+    public function getValue(): float;
 }

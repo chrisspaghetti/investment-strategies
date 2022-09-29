@@ -3,7 +3,6 @@
 
 class StrategyQuarterly implements StrategyInterface
 {
-
     /**
      * invest at start of January/April/July/October
      *

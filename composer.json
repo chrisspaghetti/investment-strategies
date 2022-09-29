@@ -3,7 +3,7 @@
   "license": "MIT",
   "description": "Compare ETF investment strategies and visualize saving plan",
   "type": "project",
-  "version": "0.2",
+  "version": "0.3",
   "keywords": [
     "ISIN",
     "ETF",
@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
+    "php": ">=8.1",
     "ext-json": "*"
   },
   "config": {

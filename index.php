@@ -30,10 +30,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     <link rel="stylesheet" href="external/jquery-simple-bar-graph/dist/css/jquery.simple-bar-graph.min.css" />
     <link rel="stylesheet" href="external/jquery-ui-1.12.1/jquery-ui.min.css" />
     <link rel="stylesheet" href="external/submit.css" />
-    <script src="external/jquery-3.6.0.min.js"></script>
-    <script src="external/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-    <script src="external/jquery-simple-bar-graph/dist/js/jquery.simple-bar-graph.min.js"></script>
-    <script src="external/lightweight-charts.js"></script>
+    <script src="external/jquery-3.6.0.min.js" type="application/javascript"></script>
+    <script src="external/jquery-ui-1.12.1/jquery-ui.min.js" type="application/javascript"></script>
+    <script src="external/jquery-simple-bar-graph/dist/js/jquery.simple-bar-graph.min.js" type="application/javascript"></script>
+    <script src="external/lightweight-charts.js" type="application/javascript"></script>
 
     <!-- OWN CSS -->
     <link rel="stylesheet" href="style.css" />
@@ -52,15 +52,14 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                     <p>This tool compares different investment strategies.
                         It shows you how effective each strategy is for an ETF like the MSCI World.</p>
 
-                    <p>Participants:
-                        <ul>
-                        <?php
-                        $participants = unserialize(PARTICIPANTS);
-                        foreach ($participants as $participant) { ?>
-                            <li><?php echo $participant[0]; ?></li>
-                        <?php } ?>
-                        </ul>
-                    </p>
+                    <p>Participants:</p>
+                    <ul>
+                    <?php
+                    $participants = unserialize(PARTICIPANTS);
+                    foreach ($participants as $participant) { ?>
+                        <li><?php echo $participant[0]; ?></li>
+                    <?php } ?>
+                    </ul>
                 </div>
             </fieldset>
 
@@ -120,6 +119,14 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
             </div>
         </form>
 
+        <div id="loadingBox" style="display:none">
+            <div class="spinnerBox">
+                <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                </svg>
+            </div>
+        </div>
+
         <div id="resultBox" style="display:none;">
             <h1>Calculation Results</h1>
             <p>On <span id="end_date"></span> each person has a total value (cash + share value) of:</p>
@@ -132,6 +139,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 <script type="text/javascript">
     let myForm = $('#form');
     let isinChartBox = $('#isinChartBox');
+    let loadingBox = $('#loadingBox');
     let resultBox = $('#resultBox');
     let graphBox = $('#graphBox');
     let historyBox = $('#history');
@@ -151,14 +159,18 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     });
 
     const getCalculationResults = function() {
+        resultBox.css({ display: 'none' });
+        loadingBox.css({ display: '' });
+
+        // AJAX request
         $.post( 'result.php',
             myForm.serialize(),
             function (data) {
-                let response = jQuery.parseJSON(data);
-
                 // clear any existing result data
                 historyBox.html('');
                 graphBox.html('');
+
+                let response = jQuery.parseJSON(data);
 
                 if (response.error) {
                     resultBox.html(response.error);
@@ -221,6 +233,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                 }
 
                 // make results visible
+                loadingBox.css({ display: 'none' });
                 resultBox.css({ display: '' });
 
                 $('html, body').animate({
@@ -332,7 +345,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
     // allow submitting form via ENTER
     $('input').keypress(function (e) {
-        if (e.which == 13) {
+        if (e.which === 13) {
             e.preventDefault();
             myForm.submit();
         }

@@ -6,17 +6,17 @@ class CalculationResult implements CalculationResultInterface
     /**
      * @var PortfolioInterface[]
      */
-    protected $portfolios = [];
+    protected array $portfolios = [];
 
     /**
      * @var DateTime
      */
-    protected $startDate;
+    protected DateTime $startDate;
 
     /**
      * @var DateTime
      */
-    protected $endDate;
+    protected DateTime $endDate;
 
     /**
      * Konstruktur
@@ -40,7 +40,7 @@ class CalculationResult implements CalculationResultInterface
     /**
      * @return DateTime
      */
-    public function getStartDate()
+    public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
@@ -48,7 +48,7 @@ class CalculationResult implements CalculationResultInterface
     /**
      * @return DateTime
      */
-    public function getEndDate()
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }
@@ -56,7 +56,7 @@ class CalculationResult implements CalculationResultInterface
     /**
      * @return PortfolioInterface[]
      */
-    public function getPortfolios()
+    public function getPortfolios(): array
     {
         return $this->portfolios;
     }

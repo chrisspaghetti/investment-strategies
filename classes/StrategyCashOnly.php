@@ -3,7 +3,6 @@
 
 class StrategyCashOnly implements StrategyInterface
 {
-
     /**
      * no investments, only cash
      *

@@ -6,32 +6,32 @@ class Configurator implements ConfiguratorInterface
     /**
      * @var String
      */
-    protected $isin;
+    protected string $isin;
 
     /**
      * @var float
      */
-    protected $amountPerMonth;
+    protected float $amountPerMonth;
 
     /**
      * @var DateTime
      */
-    protected $startDate;
+    protected DateTime $startDate;
 
     /**
      * @var DateTime
      */
-    protected $endDate;
+    protected DateTime $endDate;
 
     /**
      * @var float
      */
-    protected $brokerCommissionFirstDayOfMonth;
+    protected float $brokerCommissionFirstDayOfMonth;
 
     /**
      * @var float
      */
-    protected $brokerCommissionAnyDayOfMonth;
+    protected float $brokerCommissionAnyDayOfMonth;
 
     public function __construct()
     {
@@ -39,48 +39,54 @@ class Configurator implements ConfiguratorInterface
 
     /**
      * @param String $value
+     * @return void
      */
-    public function setIsin(String $value)
+    public function setIsin(String $value): void
     {
         $this->isin = $value;
     }
 
     /**
      * @param float $value
+     * @return void
      */
-    public function setAmountPerMonth(float $value)
+    public function setAmountPerMonth(float $value): void
     {
         $this->amountPerMonth = $value;
     }
 
     /**
      * @param float $value
+     * @return void
      */
-    public function setBrokerCommissionFirstDayOfMonth(float $value)
+    public function setBrokerCommissionFirstDayOfMonth(float $value): void
     {
         $this->brokerCommissionFirstDayOfMonth = $value;
     }
 
     /**
      * @param float $value
+     * @return void
      */
-    public function setBrokerCommissionAnyDayOfMonth(float $value)
+    public function setBrokerCommissionAnyDayOfMonth(float $value): void
     {
         $this->brokerCommissionAnyDayOfMonth = $value;
     }
 
     /**
      * @param DateTime $value
+     * @return void
      */
-    public function setStartDate(DateTime $value)
+    public function setStartDate(DateTime $value): void
     {
         $this->startDate = $value;
     }
 
     /**
      * @param DateTime $value
+     * @return void
      */
-    public function setEndDate(DateTime $value)
+    public function setEndDate(DateTime $value): void
     {
         $this->endDate = $value;
     }
@@ -90,7 +96,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return String
      */
-    public function getIsin()
+    public function getIsin(): string
     {
         return $this->isin;
     }
@@ -98,7 +104,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return float
      */
-    public function getBrokerCommissionFirstDayOfMonth()
+    public function getBrokerCommissionFirstDayOfMonth(): float
     {
         return $this->brokerCommissionFirstDayOfMonth;
     }
@@ -106,7 +112,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return float
      */
-    public function getBrokerCommissionAnyDayOfMonth()
+    public function getBrokerCommissionAnyDayOfMonth(): float
     {
         return $this->brokerCommissionAnyDayOfMonth;
     }
@@ -114,7 +120,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return float
      */
-    public function getAmountPerMonth()
+    public function getAmountPerMonth(): float
     {
         return $this->amountPerMonth;
     }
@@ -122,7 +128,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return DateTime
      */
-    public function getStartDate()
+    public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
@@ -130,7 +136,7 @@ class Configurator implements ConfiguratorInterface
     /**
      * @return DateTime
      */
-    public function getEndDate()
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }

@@ -5,31 +5,30 @@ interface ConfiguratorInterface
     /**
      * @return String
      */
-    public function getIsin();
+    public function getIsin(): string;
 
     /**
      * @return float
      */
-    public function getAmountPerMonth();
+    public function getAmountPerMonth(): float;
 
     /**
      * @return float
      */
-    public function getBrokerCommissionAnyDayOfMonth();
+    public function getBrokerCommissionAnyDayOfMonth(): float;
 
     /**
      * @return float
      */
-    public function getBrokerCommissionFirstDayOfMonth();
+    public function getBrokerCommissionFirstDayOfMonth(): float;
 
     /**
      * @return DateTime
      */
-    public function getStartDate();
+    public function getStartDate(): DateTime;
 
     /**
      * @return DateTime
      */
-    public function getEndDate();
-
+    public function getEndDate(): DateTime;
 }

@@ -6,6 +6,6 @@ interface CalculatorInterface
      * @return CalculationResultInterface
      * @throws CalculationException
      */
-    public function calc();
+    public function calc(): CalculationResultInterface;
 
 }

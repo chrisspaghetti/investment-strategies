@@ -6,17 +6,17 @@ class Calculator implements CalculatorInterface
     /**
      * @var ConfiguratorInterface
      */
-    protected $configurator;
+    protected ConfiguratorInterface $configurator;
 
     /**
      * @var IsinReaderInterface
      */
-    protected $isinReader;
+    protected IsinReaderInterface $isinReader;
 
     /**
      * @var TimeRangeInterface
      */
-    protected $timeRange;
+    protected TimeRangeInterface $timeRange;
 
     /**
      * This compare-function is used for sorting courses ascending (from low to high)
@@ -25,7 +25,7 @@ class Calculator implements CalculatorInterface
      * @param CourseInterface $b
      * @return int
      */
-    public static function cmp_course(CourseInterface $a, CourseInterface $b)
+    public static function cmp_course(CourseInterface $a, CourseInterface $b): int
     {
         $courseA = $a->getValue();
         $courseB = $b->getValue();
@@ -88,7 +88,7 @@ class Calculator implements CalculatorInterface
      * @return CalculationResultInterface
      * @throws CalculationException
      */
-    public function calc()
+    public function calc(): CalculationResultInterface
     {
         $result = new CalculationResult($this->timeRange->getStartDate(), $this->timeRange->getEndDate());
 

@@ -12,15 +12,15 @@ interface CalculationResultInterface
     /**
      * @return DateTime
      */
-    public function getStartDate();
+    public function getStartDate(): DateTime;
 
     /**
      * @return DateTime
      */
-    public function getEndDate();
+    public function getEndDate(): DateTime;
 
     /**
      * @return PortfolioInterface[]
      */
-    public function getPortfolios();
+    public function getPortfolios(): array;
 }
