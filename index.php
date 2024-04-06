@@ -70,16 +70,16 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
                 <ul class="isin">
                     <?php
-                    $available_isin = unserialize (AVAILABLE_ISIN);
+                    $available_isin = unserialize(AVAILABLE_ISIN);
                     $checked = false;
-                    foreach ($available_isin as $isin => $etf_name)
+                    foreach ($available_isin as $isin => $isin_conf)
                     {
                         $checked_txt = (!$checked) ? 'checked="checked"' : '';
                         $checked = true;
                         ?>
                         <li><label>
                                 <input type="radio" name="isin" value="<?php echo $isin; ?>" <?php echo $checked_txt ?>/>
-                                <?php echo $etf_name. ' ('.$isin.')'; ?>
+                                <?php echo $isin_conf[0]. ' ('.$isin.')'; ?>
                             </label></li>
                     <?php
                     }
@@ -149,7 +149,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
         changeYear: true,
         //minDate: new Date('2010-01-01'),
         //maxDate: new Date('2020-12-31'),
-        yearRange: '1990:2021',
+        yearRange: '1990:<?php echo date('Y'); ?>',
         dateFormat: "dd.mm.yy"
     };
     let dateFormatter = new Intl.DateTimeFormat('de-de', {
@@ -272,7 +272,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
                     let chart = LightweightCharts.createChart(chartElement, {
                         width: width,
-                        height: 200,
+                        height: 220,
                         grid: {
                             vertLines: {
                                 color: 'rgba(70, 130, 180, 0.5)',
@@ -295,7 +295,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
                             priceFormatter: price =>
                                 // round to 2decimals and add € symbol
                                 // https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
-                                ( Math.round((price + Number.EPSILON) * 100) / 100 ) + " €"
+                                ( Math.round((price + Number.EPSILON) * 100) / 100 ) + " " + response.currency
                             ,
                         },
                     });

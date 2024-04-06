@@ -4,6 +4,11 @@ interface IsinReaderInterface
     /**
      * @return String
      */
+    public function getCurrency(): string;
+
+    /**
+     * @return String
+     */
     public function getIsin(): string;
 
     /**

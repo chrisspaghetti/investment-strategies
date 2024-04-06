@@ -315,4 +315,13 @@ class IsinReader implements IsinReaderInterface
     {
         return $this->courses;
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        $available_isin = unserialize(AVAILABLE_ISIN);
+        return $available_isin[$this->isin][1] ?? '';
+    }
 }

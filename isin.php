@@ -7,7 +7,8 @@ if (!isset($_REQUEST['isin'])) {
 } else {
     $isinReader = IsinReader::getInstance($_REQUEST['isin']);
 
-    $return = [ 'data' => [] ];
+    $return = [ 'currency' => $isinReader->getCurrency(),
+                'data' => [] ];
 
     foreach ($isinReader->getCourses() as $course)
     {
@@ -18,18 +19,27 @@ if (!isset($_REQUEST['isin'])) {
             'value' => $course->getValue()
         ];
 
+        // set min value
+        if (!isset($return['min']) || $return['min']  > $course->getValue()) {
+            $return['min'] = $course->getValue();
+        }
+
+        // set max value
+        if (!isset($return['max']) || $return['max'] < $course->getValue()) {
+            $return['max'] = $course->getValue();
+        }
+
         // set start date to 1st January of the lowest year
         if (!isset($return['startDate']) && $date->format('md') < '0105') {
             $return['startDate'] = $date->format('Y-m').'-01';
         }
 
-        $return['endDate'] = $date->format('d.m.Y');
-    }
-
-    if (isset($date) && $date->format('md') < '1228') {
-        // set end date to 31st December of the highest year
-        $last_year = intval($date->format('Y')) - 1;
-        $return['endDate'] = $last_year.'-12-31';
+        $return['endDate'] = $date->format('Y-m-d');
+        if ($date->format('md')  < '1228') {
+            // set end date to 31st December of the highest year
+            $last_year = intval($date->format('Y')) - 1;
+            $return['endDate'] = $last_year.'-12-31';
+        }
     }
 }
 
